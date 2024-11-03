@@ -8,14 +8,14 @@ import java.util.Date;
 public class C_TC_BIT_PRVSN {
 
     @Id
-    @Column(name = "bit_id", length = 10)
+    @Column(name = "BIT_ID")
     private String bitId;
 
-    @Column(name = "prvsn_dt")
+    @Column(name = "PRVSN_DT")
     @Temporal(TemporalType.TIMESTAMP)
     private Date prvsnDt;
 
-    @Column(name = "prvsn_msg")
+    @Column(name = "PRVSN_MSG")
     private String prvsnMsg;
 
     // 기본 생성자

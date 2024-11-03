@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "M_OP_ROUTE_POINT")
+@IdClass(M_OP_ROUTE_POINT_ID.class)  // 복합 키 클래스 지정
 @Data
 public class M_OP_ROUTE_POINT {
 
@@ -60,4 +61,3 @@ public class M_OP_ROUTE_POINT {
     @Column(name = "UPDUSR_ID", length = 10)
     private String updateUserId;
 }
-

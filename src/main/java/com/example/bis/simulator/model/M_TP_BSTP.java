@@ -17,26 +17,26 @@ public class M_TP_BSTP {
     @Column(name = "BSTP_NM", length = 60)
     private String bstpNm;
 
-    @Column(name = "BSTP_TYPE", length = 1)
-    private String bstpType;
+//    @Column(name = "BSTP_TYPE", length = 1)
+//    private String bstpType;
 
     @Column(name = "CNTR_LANE_YN", length = 1)
     private String cntrLaneYn;
 
-    @Column(name = "USE_YN", length = 1)
-    private String useYn;
+//    @Column(name = "USE_YN", length = 1)
+//    private String useYn;
 
-    @Column(name = "BSTP_ENG_NM", length = 250)
-    private String bstpEngNm;
+//    @Column(name = "BSTP_ENG_NM", length = 250)
+//    private String bstpEngNm;
 
-    @Column(name = "BSTP_SNM", length = 60)
-    private String bstpSnm;
+//    @Column(name = "BSTP_SNM", length = 60)
+//    private String bstpSnm;
 
     @Column(name = "DIR_NM", length = 100)
     private String dirNm;
 
-    @Column(name = "DIR_NM_PSSV_YN", length = 1)
-    private String dirNmPssvYn;
+//    @Column(name = "DIR_NM_PSSV_YN", length = 1)
+//    private String dirNmPssvYn;
 
     @Column(name = "AZMTH", precision = 10, scale = 2)
     private BigDecimal azmth;
@@ -47,26 +47,26 @@ public class M_TP_BSTP {
     @Column(name = "YCORD", precision = 14, scale = 8)
     private BigDecimal ycord;
 
-    @Column(name = "ADSTDG_CD", length = 10)
-    private String adstdgCd;
+//    @Column(name = "ADSTDG_CD", length = 10)
+//    private String adstdgCd;
 
-    @Column(name = "RGSPH_CD", length = 10)
-    private String rgsphCd;
+//    @Column(name = "RGSPH_CD", length = 10)
+//    private String rgsphCd;
 
-    @Column(name = "CMPTNC_INST_NM", length = 30)
-    private String cmptncInstNm;
+//    @Column(name = "CMPTNC_INST_NM", length = 30)
+//    private String cmptncInstNm;
 
-    @Column(name = "BSTP_SRVC_ID", length = 10)
-    private String bstpSrvcId;
+//    @Column(name = "BSTP_SRVC_ID", length = 10)
+//    private String bstpSrvcId;
 
-    @Column(name = "TRCARD_BSTP_ID", length = 20)
-    private String trcardBstpId;
+//    @Column(name = "TRCARD_BSTP_ID", length = 20)
+//    private String trcardBstpId;
 
-    @Column(name = "OLD_BSTP_ID", length = 10)
-    private String oldBstpId;
+//    @Column(name = "OLD_BSTP_ID", length = 10)
+//    private String oldBstpId;
 
-    @Column(name = "BSTP_RVS_NO")
-    private Integer bstpRvsNo;
+//    @Column(name = "BSTP_RVS_NO")
+//    private Integer bstpRvsNo;
 
     @Column(name = "LINK_ID", length = 10)
     private String linkId;
@@ -107,15 +107,15 @@ public class M_TP_BSTP {
     @Column(name = "VER_ID")
     private Integer verId;
 
-    @Column(name = "UPD_DT")
-    private Date updDt;
+//    @Column(name = "UPD_DT")
+//    private Date updDt;
 
-    @Column(name = "UPDUSR_ID", length = 10)
-    private String updusrId;
+//    @Column(name = "UPDUSR_ID", length = 10)
+//    private String updusrId;
 
-    @Column(name = "SYNC_DT")
-    private Date syncDt;
+//    @Column(name = "SYNC_DT")
+//    private Date syncDt;
 
-    @Column(name = "MYBI_BSTP_ID", length = 20)
-    private String mybiBstpId;
+//    @Column(name = "MYBI_BSTP_ID", length = 20)
+//    private String mybiBstpId;
 }
