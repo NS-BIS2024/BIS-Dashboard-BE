@@ -1,9 +1,11 @@
 package com.example.bis.simulator.controller;
 
+import com.example.bis.simulator.dto.BusDataDTO;
 import com.example.bis.simulator.dto.BusStopDTO;
 import com.example.bis.simulator.dto.NodeDTO;
 import com.example.bis.simulator.dto.VertexDTO;
 import com.example.bis.simulator.repository.RouteRepository;
+import com.example.bis.simulator.service.BusInformationService;
 import com.example.bis.simulator.service.RouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +22,12 @@ public class RouteController { // 노선의 정류장,노드,버텍스 등 조�
 
     private static final Logger logger = LoggerFactory.getLogger(RouteController.class);
     private final RouteService routeService;
+    private final BusInformationService busInformationService;
 
     @Autowired
-    public RouteController(RouteService routeService) {
+    public RouteController(RouteService routeService, BusInformationService busInformationService) {
         this.routeService = routeService;
+        this.busInformationService = busInformationService;
     }
 
     // 정류장 조회 엔드포인트
@@ -87,5 +91,18 @@ public class RouteController { // 노선의 정류장,노드,버텍스 등 조�
         }
     }
 
-
+    //노선의 모든 버스 조회
+    @GetMapping("/route/{routeId}/busesInformation")
+    public ResponseEntity<List<BusDataDTO>> getBusData(@PathVariable String routeId) {
+        try {
+            List<BusDataDTO> busDataList = busInformationService.getBusData(routeId);
+            if (busDataList.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(busDataList);
+        } catch (Exception e) {
+            // 로깅 처리
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

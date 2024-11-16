@@ -28,4 +28,5 @@ public interface BusRunningRepository extends JpaRepository<C_TC_BUS_RUNG, Strin
     @Modifying
     @Query("UPDATE C_TC_BUS_RUNG b SET b.rungStatus = '1' WHERE b.obuId = :obuId")
     int startBusOperation(@Param("obuId") String obuId);
+
 }
