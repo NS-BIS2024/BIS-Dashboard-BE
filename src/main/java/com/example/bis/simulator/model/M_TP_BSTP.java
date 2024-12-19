@@ -2,6 +2,8 @@ package com.example.bis.simulator.model;
 
 import lombok.Data;
 import jakarta.persistence.*;
+import lombok.Getter;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -14,6 +16,7 @@ public class M_TP_BSTP {
     @Column(name = "BSTP_ID", length = 10, nullable = false)
     private String bstpId;
 
+    @Getter
     @Column(name = "BSTP_NM", length = 60)
     private String bstpNm;
 
