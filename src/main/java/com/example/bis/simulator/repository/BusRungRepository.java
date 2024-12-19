@@ -98,4 +98,13 @@ public interface BusRungRepository extends JpaRepository<C_TC_BUS_RUNG, String> 
                                @Param("xcord") BigDecimal xcord,
                                @Param("ycord") BigDecimal ycord);
 
+    @Modifying
+    @Query("UPDATE C_TC_BUS_RUNG r SET r.xCord = :xcord, r.yCord = :ycord, r.sqno = :sqno, r.passagePointSqNo = :passageSqno WHERE r.obuId = :obuId")
+    void updateInitialLocation(@Param("obuId") String obuId,
+                               @Param("xcord") BigDecimal xcord,
+                               @Param("ycord") BigDecimal ycord,
+                               @Param("sqno") Integer sqno,
+                               @Param("passageSqno") Integer passageSqno
+                               );
+
 }

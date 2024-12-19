@@ -98,5 +98,8 @@ public class C_TC_BUS_RUNG {
     @Column(name = "PASG_BSTP_SQNO")
     private Integer passageBusStopSqNo;
 
+    @Column(name = "SQNO")
+    private Integer sqno;
+
     // 기본 생성자는 Lombok에 의해 자동 생성됨
 }

@@ -55,7 +55,7 @@ public class BusSimulatorService {
     @Transactional
     public void startSimulation(String obuId, VertexDTO initialVertex) {
         simulationRunning = false;
-        busRungRepository.updateInitialLocation(obuId, initialVertex.getXcord(), initialVertex.getYcord()); // 추가. 시뮬레이터 시작하면 초기위치로 설정
+        busRungRepository.updateInitialLocation(obuId, initialVertex.getXcord(), initialVertex.getYcord(), initialVertex.getSqno(), initialVertex.getPointSqno()); // 추가. 시뮬레이터 시작하면 초기위치로 설정
         busRungRepository.updateBusStatus(obuId);
         System.out.println("초기 위치로 설정 완료");
     }
@@ -80,11 +80,12 @@ public class BusSimulatorService {
             BigDecimal currentY = bus.getYCord();
 
             // 현재 노드(Vertex) 인덱스 찾기
-            int currentIndex = findCurrentVertexIndex(vertices, currentX, currentY);
+            int currentIndex = findCurrentVertexIndexBySqno(vertices, bus.getPassagePointSqNo(), bus.getSqno());
             if (currentIndex < 0 || currentIndex >= vertices.size() - 1) return;
 
             // 다음 노드(Vertex)로 이동
             VertexDTO nextVertex = vertices.get(currentIndex + 1);
+
             double distance = calculateGeographicalDistance(currentY, currentX, nextVertex.getYcord(), nextVertex.getXcord());
             double speed = calculateSpeed(distance);
 
@@ -97,6 +98,9 @@ public class BusSimulatorService {
             bus.setPointPassageDate(LocalDateTime.now());
             bus.setBusLocationDivision(busLocationDivision);
 
+            bus.setPassagePointSqNo(nextVertex.getPointSqno());
+            bus.setSqno(nextVertex.getSqno());
+
             updateBuses.add(bus);
         });
 
@@ -104,6 +108,16 @@ public class BusSimulatorService {
             return;
         }
         busRungRepository.saveAll(updateBuses);
+    }
+
+    private int findCurrentVertexIndexBySqno(List<VertexDTO> vertices, Integer passagePointSqNo, Integer sqno) {
+        for (int i = 0; i < vertices.size(); i++) {
+            VertexDTO vertex = vertices.get(i);
+            if (vertex.getSqno() == sqno && vertex.getPointSqno() == passagePointSqNo) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -148,9 +162,29 @@ public class BusSimulatorService {
      * @return Vertex 인덱스 (없으면 -1)
      */
     private int findCurrentVertexIndex(List<VertexDTO> vertices, BigDecimal currentX, BigDecimal currentY) {
+        BigDecimal xCord = new BigDecimal(0);
+        BigDecimal yCord = new BigDecimal(0);
         for (int i = 0; i < vertices.size(); i++) {
             VertexDTO vertex = vertices.get(i);
             if (isCloseEnough(vertex.getXcord(), currentX) && isCloseEnough(vertex.getYcord(), currentY)) {
+                xCord = vertex.getXcord();
+                yCord = vertex.getYcord();
+
+                // 같은 x좌표 y좌표가 있을때까지 반복
+//                for (int j = i + 1; j < vertices.size(); j++) {
+//                    VertexDTO nextVertex = vertices.get(j);
+//                    if (nextVertex.getXcord().equals(xCord) && nextVertex.getYcord().equals(yCord)) {
+//                        i = j;
+//                    }
+//                }
+
+                for (int j = i + 1; j < vertices.size(); j++) {
+                    VertexDTO nextVertex = vertices.get(j);
+                    if (isCloseEnough(nextVertex.getXcord(), currentX) && isCloseEnough(nextVertex.getYcord(), currentY)) {
+                        i = j;
+                    }
+                }
+
                 return i;
             }
         }
