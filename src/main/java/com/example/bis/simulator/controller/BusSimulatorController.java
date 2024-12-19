@@ -6,6 +6,7 @@ import com.example.bis.simulator.dto.BusStopDTO;
 import com.example.bis.simulator.dto.VertexDTO;
 import com.example.bis.simulator.service.BusSimulatorService;
 import com.example.bis.simulator.service.RouteService;
+import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +78,21 @@ public class BusSimulatorController {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(locations);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("{obuId}/bus-number")
+    public ResponseEntity<Map<String, String>> getBusNumberByObuId(@PathVariable String obuId) {
+        try {
+            String busNumber = busSimulatorService.getBusNumber(obuId);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("busNumber", busNumber);
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

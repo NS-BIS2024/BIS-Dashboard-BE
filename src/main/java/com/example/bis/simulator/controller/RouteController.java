@@ -2,6 +2,7 @@ package com.example.bis.simulator.controller;
 
 import com.example.bis.simulator.dto.BusLocationDTO;
 import com.example.bis.simulator.dto.BusStopDTO;
+import com.example.bis.simulator.dto.BusStopInfoDTO;
 import com.example.bis.simulator.dto.VertexDTO;
 import com.example.bis.simulator.service.BusRungService;
 import com.example.bis.simulator.service.RouteService;

@@ -2,6 +2,7 @@ package com.example.bis.simulator.repository;
 
 import com.example.bis.simulator.model.M_OP_OBU;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +17,7 @@ public interface ObuRepository extends JpaRepository<M_OP_OBU, String> {
      * @return M_OP_OBU 객체
      */
     M_OP_OBU findByBusId(Integer busId);
+
+    @Query("SELECT o FROM M_OP_OBU o WHERE o.obuId = :obuId")
+    M_OP_OBU findByObuId(String obuId);
 }
