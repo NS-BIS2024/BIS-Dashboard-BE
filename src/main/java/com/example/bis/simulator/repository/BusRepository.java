@@ -4,6 +4,7 @@ import com.example.bis.simulator.model.M_OP_BUS;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,4 +20,7 @@ public interface BusRepository extends JpaRepository<M_OP_BUS, String> {
      * @return 상위 10개의 M_OP_BUS 리스트
      */
     Page<M_OP_BUS> findAll(Pageable pageable);
+
+    @Query("SELECT b FROM M_OP_BUS b WHERE b.busId = :busId")
+    M_OP_BUS findByBusId(Integer busId);
 }

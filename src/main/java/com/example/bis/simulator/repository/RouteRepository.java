@@ -1,6 +1,7 @@
 package com.example.bis.simulator.repository;
 
 import com.example.bis.simulator.dto.BusStopDTO;
+import com.example.bis.simulator.dto.BusStopInfoDTO;
 import com.example.bis.simulator.dto.VertexDTO;
 import com.example.bis.simulator.model.M_OP_ROUTE;
 import org.springframework.data.jpa.repository.JpaRepository;

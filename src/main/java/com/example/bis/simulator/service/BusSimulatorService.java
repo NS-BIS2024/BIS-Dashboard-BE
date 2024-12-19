@@ -4,7 +4,10 @@ import com.example.bis.simulator.dto.BusDataResponse;
 import com.example.bis.simulator.dto.BusSimulationResponse;
 import com.example.bis.simulator.dto.VertexDTO;
 import com.example.bis.simulator.model.C_TC_BUS_RUNG;
+import com.example.bis.simulator.model.M_OP_OBU;
+import com.example.bis.simulator.repository.BusRepository;
 import com.example.bis.simulator.repository.BusRungRepository;
+import com.example.bis.simulator.repository.ObuRepository;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,8 +23,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BusSimulatorService {
 
+    private final ObuRepository obuRepository;
     private volatile boolean simulationRunning = true; // 업데이트 플래그
     private final BusRungRepository busRungRepository;
+    private final BusRepository busRepository;
     private final RouteService routeService;
 
     @Value("${simulator.update.interval:5000}")
@@ -162,29 +167,15 @@ public class BusSimulatorService {
      * @return Vertex 인덱스 (없으면 -1)
      */
     private int findCurrentVertexIndex(List<VertexDTO> vertices, BigDecimal currentX, BigDecimal currentY) {
-        BigDecimal xCord = new BigDecimal(0);
-        BigDecimal yCord = new BigDecimal(0);
         for (int i = 0; i < vertices.size(); i++) {
             VertexDTO vertex = vertices.get(i);
             if (isCloseEnough(vertex.getXcord(), currentX) && isCloseEnough(vertex.getYcord(), currentY)) {
-                xCord = vertex.getXcord();
-                yCord = vertex.getYcord();
-
-                // 같은 x좌표 y좌표가 있을때까지 반복
-//                for (int j = i + 1; j < vertices.size(); j++) {
-//                    VertexDTO nextVertex = vertices.get(j);
-//                    if (nextVertex.getXcord().equals(xCord) && nextVertex.getYcord().equals(yCord)) {
-//                        i = j;
-//                    }
-//                }
-
                 for (int j = i + 1; j < vertices.size(); j++) {
                     VertexDTO nextVertex = vertices.get(j);
                     if (isCloseEnough(nextVertex.getXcord(), currentX) && isCloseEnough(nextVertex.getYcord(), currentY)) {
                         i = j;
                     }
                 }
-
                 return i;
             }
         }
@@ -217,5 +208,16 @@ public class BusSimulatorService {
             return "03"; // 진출
         }
         return "01"; // 정주기
+    }
+
+    /**
+     * obuId에 해당하는 버스 번호 조회
+     *
+     * @param obuId obu ID
+     * @return 버스 데이터 리스트
+     */
+    public String getBusNumber(String obuId) {
+        M_OP_OBU byObuId = obuRepository.findByObuId(obuId);
+        return busRepository.findByBusId(byObuId.getBusId()).getBusNo();
     }
 }
